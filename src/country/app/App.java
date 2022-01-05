@@ -27,16 +27,24 @@ public class App {
 			System.out.println("Exit---------------------------------->0");
 		    String query = inputFromConsole.next();
 		switch (query) {
+		//
 		case "1": {
 			Country country=new Country();
 			System.out.println("add information of a country like: code,name,device,greeting,nameofcontinent:");
 			String input=inputFromConsole.next();
-			String[] informationOfCountry=input.split(",");
-			country.setCode(informationOfCountry[0]);
-			country.setName(informationOfCountry[1]);
-			country.setDevise(informationOfCountry[2]);
-			country.setGreetings(informationOfCountry[3]);
-			serviceWorker.InsertCountry(country,informationOfCountry[4]);
+			try{
+				String[] informationOfCountry=input.split(",");
+				country.setCode(informationOfCountry[0]);
+				country.setName(informationOfCountry[1]);
+				country.setDevise(informationOfCountry[2]);
+				country.setGreetings(informationOfCountry[3]);
+				serviceWorker.InsertCountry(country,informationOfCountry[4]);
+			}
+			catch (ArrayIndexOutOfBoundsException e) {
+				System.err.println("Verify the form of your input");
+			}
+			
+			
 		}
 			      break;
 		case "2": {
@@ -57,6 +65,7 @@ public class App {
 			serviceWorker.selectCountry(code);
 			System.out.println("Enter new information of the country like: code,name,device,greeting,nameofcontinent:");
 			String input=inputFromConsole.next();
+			try {
 			String[] informationOfCountry=input.split(",");
 			Country country=new Country();
 			country.setCode(informationOfCountry[0]);
@@ -64,6 +73,15 @@ public class App {
 			country.setDevise(informationOfCountry[2]);
 			country.setGreetings(informationOfCountry[3]);
 			serviceWorker.updateCountry(country,code,informationOfCountry[4]);
+			}catch (ArrayIndexOutOfBoundsException e) {
+				System.err.println("Verify the form of your input");
+			}
+			}
+		break;
+		case "5": {
+			System.out.println("Enter Code of continent: ");
+			String input=inputFromConsole.next();
+			serviceWorker.selectCountriesOfContinent(input);
 		}
 		break;
 		default:

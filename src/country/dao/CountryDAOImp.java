@@ -64,7 +64,14 @@ public class CountryDAOImp implements CountryDAO{
 		query.setParameter("name", name);
 		return (Continent) query.uniqueResult();
 	}
-
+	@Override
+	public Continent getContinentByCode(String code) {
+		
+		String hql="from Continent C where C.code =:code";
+		Query query=getSessionFactory().openSession().createQuery(hql);
+		query.setParameter("code", code);
+		return (Continent) query.uniqueResult();
+	}
 @Override
 	
 	public Country getByCode(String code) {
@@ -99,7 +106,7 @@ public void updateByCode(Country country,String code,String nameOfContinet) {
     if(country.getContinent()==null)
     	System.err.println("there is no continent with this name");
     else {
-    	if(getByCode(country.getCode())==null) {
+    	
 	Session session=getSessionFactory().openSession();
 	Transaction txn = session.beginTransaction();
 	String hql = "update Country c set c.name=:name,c.code=:code,c.devise=:devise,c.greetings=:greeting,c.continent=:continent where c.code=:codeToUpdate";
@@ -118,8 +125,17 @@ public void updateByCode(Country country,String code,String nameOfContinet) {
 	else
 		System.err.println("update not successful");
     	}
-    	 else 
-         	System.err.println("this code already exists");
+    	
+
 }
+@Override
+public List<Country> getCountrieByCode(String code) {
+	System.out.println("N");
+	Continent continent=getContinentByCode(code);
+	Session session=getSessionFactory().openSession();
+	String hql="FROM Country C WHERE C.continent=:continent";
+	Query query = session.createQuery(hql);
+	 query.setParameter("continent",continent);
+	return query.getResultList();
 }
 }

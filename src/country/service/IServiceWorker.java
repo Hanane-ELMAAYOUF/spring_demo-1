@@ -7,4 +7,5 @@ public interface IServiceWorker {
 	void selectCountry(String code);
 	void deleteCountry(String code);
 	void updateCountry(Country country,String code,String nameOfContinet);
+	void selectCountriesOfContinent(String code);
 }

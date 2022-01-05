@@ -1,9 +1,12 @@
 package country.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CollectionId;
 
@@ -33,5 +36,12 @@ public class Continent {
 	}
 	private String name;
 	private String code;
-    
+	@OneToMany
+    private List<Country> countries;
+	public List<Country> getCountries() {
+		return countries;
+	}
+	public void setCountries(List<Country> countries) {
+		this.countries = countries;
+	}
 }
