@@ -16,7 +16,6 @@
 	<classpathentry kind="lib" path="lib1/javax.transaction-api-1.3.jar"/>
 	<classpathentry kind="lib" path="lib1/jaxb-api-2.4.0-b180830.0359.jar"/>
 	<classpathentry kind="lib" path="lib1/jboss-logging-3.4.2.Final.jar"/>
-	<classpathentry kind="lib" path="lib1/junit-jupiter-api-5.5.2.jar"/>
 	<classpathentry kind="lib" path="lib1/lombok.jar"/>
 	<classpathentry kind="lib" path="lib1/spring-aop-5.3.14.jar"/>
 	<classpathentry kind="lib" path="lib1/spring-beans-5.3.14.jar"/>
@@ -26,6 +25,7 @@
 	<classpathentry kind="lib" path="lib1/spring-jdbc-5.3.14.jar"/>
 	<classpathentry kind="lib" path="lib1/spring-orm-5.3.14 (1).jar"/>
 	<classpathentry kind="lib" path="lib1/spring-tx-5.3.14.jar"/>
+	<classpathentry kind="lib" path="lib1/junit-jupiter-api-5.5.2.jar"/>
 	<classpathentry kind="lib" path="lib1/assertj-core-1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib1/junit-platform-commons-1.5.2.jar"/>
 	<classpathentry kind="lib" path="lib1/junit-platform-engine-1.8.2.jar"/>
