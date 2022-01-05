@@ -16,7 +16,10 @@ public class ServiceWorkerImpl implements IServiceWorker {
 	private CountryDAO countryDAO;
 	@Autowired
 	private ApplicationContext applicationContext;
-	
+	@Override
+	public void InsertCountry(Country country,String nameOfContinet) {
+		countryDAO.add(country,nameOfContinet);
+	}
 	
 
 	

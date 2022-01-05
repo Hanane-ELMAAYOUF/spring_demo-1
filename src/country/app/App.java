@@ -26,7 +26,22 @@ public class App {
 			System.out.println("Select countries of a continent------->5");
 			System.out.println("Exit---------------------------------->0");
 		    String query = inputFromConsole.next();
-			
+		switch (query) {
+		case "1": {
+			Country country=new Country();
+			System.out.println("add information of a country like: code,name,device,greeting,nameofcontinent:");
+			String input=inputFromConsole.next();
+			String[] informationOfCountry=input.split(",");
+			country.setCode(informationOfCountry[0]);
+			country.setName(informationOfCountry[1]);
+			country.setDevise(informationOfCountry[2]);
+			country.setGreetings(informationOfCountry[3]);
+			serviceWorker.InsertCountry(country,informationOfCountry[4]);
+		}
+			      break;
+		default:
+			System.err.println("Unexpected value: " + query);
+		}
 			
 	}
 	
