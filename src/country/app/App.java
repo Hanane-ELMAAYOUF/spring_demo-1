@@ -51,6 +51,21 @@ public class App {
 			serviceWorker.deleteCountry(input);
 		}
 		break;
+		case "4": {
+			System.out.println("Enter Code of country: ");
+			String code=inputFromConsole.next();
+			serviceWorker.selectCountry(code);
+			System.out.println("Enter new information of the country like: code,name,device,greeting,nameofcontinent:");
+			String input=inputFromConsole.next();
+			String[] informationOfCountry=input.split(",");
+			Country country=new Country();
+			country.setCode(informationOfCountry[0]);
+			country.setName(informationOfCountry[1]);
+			country.setDevise(informationOfCountry[2]);
+			country.setGreetings(informationOfCountry[3]);
+			serviceWorker.updateCountry(country,code,informationOfCountry[4]);
+		}
+		break;
 		default:
 			System.err.println("Unexpected value: " + query);
 		}

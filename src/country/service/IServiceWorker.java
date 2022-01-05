@@ -6,4 +6,5 @@ public interface IServiceWorker {
 	void InsertCountry(Country country,String nameOfContinet);
 	void selectCountry(String code);
 	void deleteCountry(String code);
+	void updateCountry(Country country,String code,String nameOfContinet);
 }

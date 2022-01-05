@@ -38,7 +38,7 @@ public class CountryDAOImp implements CountryDAO{
         if(country.getContinent()==null)
         	System.err.println("there is no continent with this name");
         else {
-        
+            if(getByCode(country.getCode())==null) {
         	Session session=getSessionFactory().openSession();
         	Transaction txn = session.beginTransaction();
             Query query=session.createSQLQuery("INSERT INTO country(name, code, devise, greetings,continent_id) VALUES(:name, :code, :devise,:greeting,:continent);");
@@ -50,7 +50,9 @@ public class CountryDAOImp implements CountryDAO{
         	}
             else
         		System.err.println("Insertion not successful");
-
+            }
+            else 
+            	System.err.println("this code already exists");
        
 	}
 	}
@@ -90,5 +92,34 @@ public void deleteByCode(String code) {
 	else
 		System.err.println("delete not successful");
 }
+@Override
 
+public void updateByCode(Country country,String code,String nameOfContinet) {
+	country.setContinent(getByName(nameOfContinet));
+    if(country.getContinent()==null)
+    	System.err.println("there is no continent with this name");
+    else {
+    	if(getByCode(country.getCode())==null) {
+	Session session=getSessionFactory().openSession();
+	Transaction txn = session.beginTransaction();
+	String hql = "update Country c set c.name=:name,c.code=:code,c.devise=:devise,c.greetings=:greeting,c.continent=:continent where c.code=:codeToUpdate";
+	Query query = session.createQuery(hql);
+	 query.setParameter("name",country.getName())
+	      .setParameter("code",country.getCode())
+	      .setParameter("devise",country.getDevise())
+	      .setParameter("greeting",country.getGreetings())
+	      .setParameter("continent",country.getContinent())
+	      .setParameter("codeToUpdate", code);
+	int rowsAffected = query.executeUpdate();
+	txn.commit();
+	if (rowsAffected > 0) {
+	    System.out.println("Updates " + rowsAffected + " rows.");
+	}
+	else
+		System.err.println("update not successful");
+    	}
+    	 else 
+         	System.err.println("this code already exists");
+}
+}
 }

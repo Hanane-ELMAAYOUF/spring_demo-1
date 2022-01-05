@@ -40,6 +40,12 @@ public class ServiceWorkerImpl implements IServiceWorker {
 		countryDAO.deleteByCode(code);
 		
 	}
+
+	@Override
+	public void updateCountry(Country country,String code,String nameOfContinet) {
+		countryDAO.updateByCode(country, code,nameOfContinet);
+		
+	}
 	 
 	                
 
