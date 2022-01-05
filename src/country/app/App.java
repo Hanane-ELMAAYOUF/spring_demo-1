@@ -39,6 +39,12 @@ public class App {
 			serviceWorker.InsertCountry(country,informationOfCountry[4]);
 		}
 			      break;
+		case "2": {
+			System.out.println("Enter Code of country: ");
+			String input=inputFromConsole.next();
+			serviceWorker.selectCountry(input);
+		}
+		break;
 		default:
 			System.err.println("Unexpected value: " + query);
 		}

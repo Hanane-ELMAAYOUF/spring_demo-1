@@ -68,6 +68,14 @@ public class CountryDAOImp implements CountryDAO{
 		return (Continent) query.uniqueResult();
 	}
 
+@Override
 	
+	public Country getByCode(String code) {
+		String hql="from Country C where C.code =:code";
+		Query query=getSessionFactory().openSession().createQuery(hql);
+		query.setParameter("code", code);
+		Country country=(Country) query.uniqueResult();
+        return country;
+	}
 
 }
