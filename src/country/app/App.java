@@ -45,6 +45,12 @@ public class App {
 			serviceWorker.selectCountry(input);
 		}
 		break;
+		case "3": {
+			System.out.println("Enter Code of country: ");
+			String input=inputFromConsole.next();
+			serviceWorker.deleteCountry(input);
+		}
+		break;
 		default:
 			System.err.println("Unexpected value: " + query);
 		}

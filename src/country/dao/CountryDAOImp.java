@@ -15,7 +15,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import country.model.Continent;
 import country.model.Country;
@@ -49,6 +48,9 @@ public class CountryDAOImp implements CountryDAO{
         	if (rowsAffected > 0) {
         	    System.out.println("Inserted " + rowsAffected + " rows.");
         	}
+            else
+        		System.err.println("Insertion not successful");
+
        
 	}
 	}
@@ -70,5 +72,23 @@ public class CountryDAOImp implements CountryDAO{
 		Country country=(Country) query.uniqueResult();
         return country;
 	}
+@Override
+
+public void deleteByCode(String code) {
+	Session session=getSessionFactory().openSession();
+	Transaction txn = session.beginTransaction();
+	String hql = "delete from Country where code = :code";
+	 
+	Query query = session.createQuery(hql);
+	query.setParameter("code",code);
+	 
+	int rowsAffected = query.executeUpdate();
+	txn.commit();
+	if (rowsAffected > 0) {
+	    System.out.println("Deleted " + rowsAffected + " rows.");
+	}
+	else
+		System.err.println("delete not successful");
+}
 
 }
