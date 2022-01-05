@@ -34,28 +34,23 @@ public class CountryDAOImp implements CountryDAO{
 	}
 	@Override
 
-	public void add(Country c,String nameOfContinet) {
-		c.setContinent(getByName(nameOfContinet));
-        if(c.getContinent()==null)
+	public void add(Country country,String nameOfContinet) {
+		country.setContinent(getByName(nameOfContinet));
+        if(country.getContinent()==null)
         	System.err.println("there is no continent with this name");
         else {
-        // save() and persist() don't work ---> to review
-        Connection connection=null;
-       try {
-        connection=dataSource.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Country(name, code, devise, greetings,continent_id) VALUES(?,?, ?,?,?);");
-		preparedStatement.setString(1, c.getName());
-		preparedStatement.setString(2, c.getCode());
-		preparedStatement.setString(3, c.getDevise());
-		preparedStatement.setString(4, c.getGreetings());
-		preparedStatement.setInt(5, c.getContinent().getId());
-		int successfulInd = preparedStatement.executeUpdate();
-       
-           System.out.println("Insertion successful");
-            
-        } catch (SQLException exception) {
-        	System.err.println("Insertion not successful");
-		}
+        
+        	Session session=getSessionFactory().openSession();
+        	Transaction txn = session.beginTransaction();
+            Query query=session.createSQLQuery("INSERT INTO country(name, code, devise, greetings,continent_id) VALUES(:name, :code, :devise,:greeting,:continent);");
+            query.setParameter("name",country.getName()).setParameter("code",country.getCode()).setParameter("devise",country.getDevise()).setParameter("greeting",country.getGreetings()).setParameter("continent",country.getContinent());
+            int rowsAffected = query.executeUpdate();
+        	txn.commit();
+        	if (rowsAffected > 0) {
+        	    System.out.println("Inserted " + rowsAffected + " rows.");
+        	}
+        	else
+        		System.err.println("Insertion not successful");
        
 	}
 	}
@@ -77,5 +72,23 @@ public class CountryDAOImp implements CountryDAO{
 		Country country=(Country) query.uniqueResult();
         return country;
 	}
+@Override
+
+public void deleteByCode(String code) {
+	Session session=getSessionFactory().openSession();
+	Transaction txn = session.beginTransaction();
+	String hql = "delete from Country where code = :code";
+	 
+	Query query = session.createQuery(hql);
+	query.setParameter("code",code);
+	 
+	int rowsAffected = query.executeUpdate();
+	txn.commit();
+	if (rowsAffected > 0) {
+	    System.out.println("Deleted " + rowsAffected + " rows.");
+	}
+	else
+		System.err.println("delete not successful");
+}
 
 }
