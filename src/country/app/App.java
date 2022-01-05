@@ -84,6 +84,10 @@ public class App {
 			serviceWorker.selectCountriesOfContinent(input);
 		}
 		break;
+		case "0": 
+			System.exit(0);
+			break;
+		
 		default:
 			System.err.println("Unexpected value: " + query);
 		}

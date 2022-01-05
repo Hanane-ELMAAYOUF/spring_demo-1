@@ -16,8 +16,6 @@ public class ServiceWorkerImpl implements IServiceWorker {
 	@Autowired
 	@Qualifier("hibernate")
 	private CountryDAO countryDAO;
-	@Autowired
-	private ApplicationContext applicationContext;
 	
 	@Override
 	public void InsertCountry(Country country,String nameOfContinet) {
@@ -52,7 +50,6 @@ public class ServiceWorkerImpl implements IServiceWorker {
 
 	@Override
 	public void selectCountriesOfContinent(String code) {
-		System.out.println("Nt");
 		List<Country> countries=countryDAO.getCountrieByCode(code);
 		if(countries.size()==0) 
 			System.err.println("No country in this continent");

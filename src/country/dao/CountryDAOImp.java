@@ -32,8 +32,8 @@ public class CountryDAOImp implements CountryDAO{
 		this.sessionFactory = sessionFactory;
 	}
 	@Override
-
-	public void add(Country country,String nameOfContinet) {
+	public int add(Country country,String nameOfContinet) {
+		 int rowsAffected=0;
 		country.setContinent(getByName(nameOfContinet));
         if(country.getContinent()==null)
         	System.err.println("there is no continent with this name");
@@ -43,7 +43,7 @@ public class CountryDAOImp implements CountryDAO{
         	Transaction txn = session.beginTransaction();
             Query query=session.createSQLQuery("INSERT INTO country(name, code, devise, greetings,continent_id) VALUES(:name, :code, :devise,:greeting,:continent);");
             query.setParameter("name",country.getName()).setParameter("code",country.getCode()).setParameter("devise",country.getDevise()).setParameter("greeting",country.getGreetings()).setParameter("continent",country.getContinent());
-            int rowsAffected = query.executeUpdate();
+             rowsAffected = query.executeUpdate();
         	txn.commit();
         	if (rowsAffected > 0) {
         	    System.out.println("Inserted " + rowsAffected + " rows.");
@@ -54,7 +54,7 @@ public class CountryDAOImp implements CountryDAO{
             else 
             	System.err.println("this code already exists");
        
-	}
+	}return rowsAffected;
 	}
 	@Override
 	public Continent getByName(String name) {
@@ -83,7 +83,8 @@ public class CountryDAOImp implements CountryDAO{
 	}
 @Override
 
-public void deleteByCode(String code) {
+public int deleteByCode(String code) {
+	int rowsAffected=0;
 	Session session=getSessionFactory().openSession();
 	Transaction txn = session.beginTransaction();
 	String hql = "delete from Country where code = :code";
@@ -91,17 +92,19 @@ public void deleteByCode(String code) {
 	Query query = session.createQuery(hql);
 	query.setParameter("code",code);
 	 
-	int rowsAffected = query.executeUpdate();
+	rowsAffected = query.executeUpdate();
 	txn.commit();
 	if (rowsAffected > 0) {
 	    System.out.println("Deleted " + rowsAffected + " rows.");
 	}
 	else
 		System.err.println("delete not successful");
+	return rowsAffected;
 }
 @Override
 
-public void updateByCode(Country country,String code,String nameOfContinet) {
+public int updateByCode(Country country,String code,String nameOfContinet) {
+	int rowsAffected=0;
 	country.setContinent(getByName(nameOfContinet));
     if(country.getContinent()==null)
     	System.err.println("there is no continent with this name");
@@ -117,7 +120,7 @@ public void updateByCode(Country country,String code,String nameOfContinet) {
 	      .setParameter("greeting",country.getGreetings())
 	      .setParameter("continent",country.getContinent())
 	      .setParameter("codeToUpdate", code);
-	int rowsAffected = query.executeUpdate();
+	rowsAffected = query.executeUpdate();
 	txn.commit();
 	if (rowsAffected > 0) {
 	    System.out.println("Updates " + rowsAffected + " rows.");
@@ -126,11 +129,10 @@ public void updateByCode(Country country,String code,String nameOfContinet) {
 		System.err.println("update not successful");
     	}
     	
-
+return rowsAffected;
 }
 @Override
 public List<Country> getCountrieByCode(String code) {
-	System.out.println("N");
 	Continent continent=getContinentByCode(code);
 	Session session=getSessionFactory().openSession();
 	String hql="FROM Country C WHERE C.continent=:continent";
