@@ -34,24 +34,18 @@ public class CountryDAOImp implements CountryDAO{
 	}
 	@Override
 
-	public void add(Country country,String nameOfContinet) {
+	public int add(Country country,String nameOfContinet) {
 		country.setContinent(getByName(nameOfContinet));
-        if(country.getContinent()==null)
+        if(country.getContinent()==null) {
         	System.err.println("there is no continent with this name");
+        return -1;
+        }
         else {
         
-        	Session session=getSessionFactory().openSession();
-        	Transaction txn = session.beginTransaction();
-            Query query=session.createSQLQuery("INSERT INTO country(name, code, devise, greetings,continent_id) VALUES(:name, :code, :devise,:greeting,:continent);");
+        	Query query=getSession().createSQLQuery("INSERT INTO country(name, code, devise, greetings,continent_id) VALUES(:name, :code, :devise,:greeting,:continent);");
             query.setParameter("name",country.getName()).setParameter("code",country.getCode()).setParameter("devise",country.getDevise()).setParameter("greeting",country.getGreetings()).setParameter("continent",country.getContinent());
-            int rowsAffected = query.executeUpdate();
-        	txn.commit();
-        	if (rowsAffected > 0) {
-        	    System.out.println("Inserted " + rowsAffected + " rows.");
-        	}
-        	else
-        		System.err.println("Insertion not successful");
-       
+           return query.executeUpdate();
+        	
 	}
 	}
 	@Override
@@ -64,7 +58,6 @@ public class CountryDAOImp implements CountryDAO{
 	}
 
 @Override
-	
 	public Country getByCode(String code) {
 		String hql="from Country C where C.code =:code";
 		Query query=getSessionFactory().openSession().createQuery(hql);
@@ -73,22 +66,12 @@ public class CountryDAOImp implements CountryDAO{
         return country;
 	}
 @Override
-
-public void deleteByCode(String code) {
-	Session session=getSessionFactory().openSession();
-	Transaction txn = session.beginTransaction();
-	String hql = "delete from Country where code = :code";
-	 
-	Query query = session.createQuery(hql);
+public int deleteByCode(String code) {
+	Query query = getSession().createQuery("delete from Country where code = :code");
 	query.setParameter("code",code);
-	 
-	int rowsAffected = query.executeUpdate();
-	txn.commit();
-	if (rowsAffected > 0) {
-	    System.out.println("Deleted " + rowsAffected + " rows.");
-	}
-	else
-		System.err.println("delete not successful");
+	return query.executeUpdate();
 }
-
+   private Session getSession() {
+	  return sessionFactory.getCurrentSession();
+   }
 }

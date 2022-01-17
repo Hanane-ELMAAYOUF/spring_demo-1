@@ -19,7 +19,13 @@ public class ServiceWorkerImpl implements IServiceWorker {
 	
 	@Override
 	public void InsertCountry(Country country,String nameOfContinet) {
-		countryDAO.add(country,nameOfContinet);
+		int rowsAffected=countryDAO.add(country,nameOfContinet);
+		if (rowsAffected > 0) {
+    	    System.out.println("Inserted " + rowsAffected + " rows.");
+    	}
+    	else
+    		System.err.println("Insertion not successful");
+   
 	}
 
 	@Override
@@ -37,8 +43,12 @@ public class ServiceWorkerImpl implements IServiceWorker {
 
 	@Override
 	public void deleteCountry(String code) {
-		countryDAO.deleteByCode(code);
-		
+		int rowsAffected=countryDAO.deleteByCode(code);
+		if (rowsAffected > 0) {
+		    System.out.println("Deleted " + rowsAffected + " rows.");
+		}
+		else
+			System.err.println("delete not successful");
 	}
 	 
 	                
