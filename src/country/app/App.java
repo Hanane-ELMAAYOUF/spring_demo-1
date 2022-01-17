@@ -27,7 +27,7 @@ public class App {
 			System.out.println("Exit---------------------------------->0");
 		    String query = inputFromConsole.next();
 		switch (query) {
-		//
+		
 		case "1": {
 			Country country=new Country();
 			System.out.println("add information of a country like: code,name,device,greeting,nameofcontinent:");
@@ -73,10 +73,12 @@ public class App {
 			country.setDevise(informationOfCountry[2]);
 			country.setGreetings(informationOfCountry[3]);
 			serviceWorker.updateCountry(country,code,informationOfCountry[4]);
-<<<<<<< HEAD
 			}catch (ArrayIndexOutOfBoundsException e) {
 				System.err.println("Verify the form of your input");
 			}
+			}
+			else
+				 System.err.println("no country with this code ");
 			}
 		break;
 		case "5": {
@@ -84,12 +86,6 @@ public class App {
 			String input=inputFromConsole.next();
 			serviceWorker.selectCountriesOfContinent(input);
 		}
-=======
-			}
-			else
-				 System.err.println("no country with this code ");
-			}
->>>>>>> aspect-fonctionnel-04
 		break;
 		default:
 			System.err.println("Unexpected value: " + query);

@@ -85,7 +85,6 @@ public int updateByCode(Country country,String code,String nameOfContinet) {
 }
 @Override
 public List<Country> getCountrieByCode(String code) {
-	System.out.println("N");
 	Continent continent=getContinentByCode(code);
 	Session session=getSessionFactory().openSession();
 	String hql="FROM Country C WHERE C.continent=:continent";
