@@ -42,9 +42,8 @@ public class CountryDAOImp implements CountryDAO{
 	}
 	@Override
 	public Continent getContinentByCode(String code) {
-		
 		String hql="from Continent C where C.code =:code";
-		Query query=getSessionFactory().openSession().createQuery(hql);
+		Query query=getSession().createQuery(hql);
 		query.setParameter("code", code);
 		return (Continent) query.uniqueResult();
 	}
