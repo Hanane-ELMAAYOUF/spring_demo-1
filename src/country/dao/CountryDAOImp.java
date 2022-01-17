@@ -57,6 +57,8 @@ public class CountryDAOImp implements CountryDAO{
 @Override
 
 public int deleteByCode(String code) {
+	if(getByCode(code)==null)
+    	return -2;
 	Query query = getSession().createQuery("delete from Country where code = :code");
 	query.setParameter("code",code);
 	return query.executeUpdate();
@@ -83,9 +85,9 @@ public int updateByCode(Country country,String code,String nameOfContinet) {
 @Override
 public List<Country> getCountrieByCode(String code) {
 	Continent continent=getContinentByCode(code);
-	Session session=getSessionFactory().openSession();
-	String hql="FROM Country C WHERE C.continent=:continent";
-	Query query = session.createQuery(hql);
+	if(continent==null)
+		return null;
+	Query query = getSession().createQuery("FROM Country C WHERE C.continent=:continent");
 	 query.setParameter("continent",continent);
 	return query.getResultList();
 }
