@@ -15,7 +15,6 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import country.model.Continent;
 import country.model.Country;
@@ -38,19 +37,8 @@ public class CountryDAOImp implements CountryDAO{
 		country.setContinent(getByName(nameOfContinet));
         if(country.getContinent()==null)
         	System.err.println("there is no continent with this name");
-        else {
-        
-        	Session session=getSessionFactory().openSession();
-        	Transaction txn = session.beginTransaction();
-            Query query=session.createSQLQuery("INSERT INTO country(name, code, devise, greetings,continent_id) VALUES(:name, :code, :devise,:greeting,:continent);");
-            query.setParameter("name",country.getName()).setParameter("code",country.getCode()).setParameter("devise",country.getDevise()).setParameter("greeting",country.getGreetings()).setParameter("continent",country.getContinent());
-            int rowsAffected = query.executeUpdate();
-        	txn.commit();
-        	if (rowsAffected > 0) {
-        	    System.out.println("Inserted " + rowsAffected + " rows.");
-        	}
-       
-	}
+        else getSession().save(country);
+	
 	}
 	@Override
 	public Continent getByName(String name) {
@@ -61,6 +49,8 @@ public class CountryDAOImp implements CountryDAO{
 		return (Continent) query.uniqueResult();
 	}
 
-	
+	private Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
 
 }
