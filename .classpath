@@ -9,6 +9,7 @@
 	<classpathentry kind="lib" path="lib1/commons-logging-1.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib1/commons-pool2-2.11.1.jar"/>
 	<classpathentry kind="lib" path="lib1/dom4j-2.1.3.jar"/>
+	<classpathentry kind="lib" path="lib1/h2-2.0.204.jar"/>
 	<classpathentry kind="lib" path="lib1/hibernate-commons-annotations-5.1.2.Final.jar"/>
 	<classpathentry kind="lib" path="lib1/hibernate-core-5.6.3.Final (1).jar"/>
 	<classpathentry kind="lib" path="lib1/javax.persistence-api-2.2.jar"/>
@@ -25,7 +26,6 @@
 	<classpathentry kind="lib" path="lib1/spring-jdbc-5.3.14.jar"/>
 	<classpathentry kind="lib" path="lib1/spring-orm-5.3.14 (1).jar"/>
 	<classpathentry kind="lib" path="lib1/spring-tx-5.3.14.jar"/>
-	<classpathentry kind="lib" path="lib1/h2-1.4.200.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="module" value="true"/>
