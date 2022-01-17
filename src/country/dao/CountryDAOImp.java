@@ -39,24 +39,8 @@ public class CountryDAOImp implements CountryDAO{
         if(c.getContinent()==null)
         	System.err.println("there is no continent with this name");
         else {
-        // save() and persist() don't work ---> to review
-        Connection connection=null;
-       try {
-        connection=dataSource.getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Country(name, code, devise, greetings,continent_id) VALUES(?,?, ?,?,?);");
-		preparedStatement.setString(1, c.getName());
-		preparedStatement.setString(2, c.getCode());
-		preparedStatement.setString(3, c.getDevise());
-		preparedStatement.setString(4, c.getGreetings());
-		preparedStatement.setInt(5, c.getContinent().getId());
-		int successfulInd = preparedStatement.executeUpdate();
-       
-           System.out.println("Insertion successful");
-            
-        } catch (SQLException exception) {
-        	System.err.println("Insertion not successful");
-		}
-       
+        
+       getSession().save(c);
 	}
 	}
 	@Override
@@ -77,5 +61,8 @@ public class CountryDAOImp implements CountryDAO{
 		Country country=(Country) query.uniqueResult();
         return country;
 	}
+private Session getSession() {
+	return sessionFactory.getCurrentSession();
+}
 
 }
