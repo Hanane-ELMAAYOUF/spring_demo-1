@@ -27,7 +27,7 @@ public class App {
 			System.out.println("Exit---------------------------------->0");
 		    String query = inputFromConsole.next();
 		switch (query) {
-		//
+		
 		case "1": {
 			Country country=new Country();
 			System.out.println("add information of a country like: code,name,device,greeting,nameofcontinent:");
@@ -62,7 +62,7 @@ public class App {
 		case "4": {
 			System.out.println("Enter Code of country: ");
 			String code=inputFromConsole.next();
-			serviceWorker.selectCountry(code);
+			if(serviceWorker.isExist(code)) {
 			System.out.println("Enter new information of the country like: code,name,device,greeting,nameofcontinent:");
 			String input=inputFromConsole.next();
 			try {
@@ -76,6 +76,9 @@ public class App {
 			}catch (ArrayIndexOutOfBoundsException e) {
 				System.err.println("Verify the form of your input");
 			}
+			}
+			else
+				 System.err.println("no country with this code ");
 			}
 		break;
 		case "5": {

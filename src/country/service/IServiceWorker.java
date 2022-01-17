@@ -8,4 +8,5 @@ public interface IServiceWorker {
 	void deleteCountry(String code);
 	void updateCountry(Country country,String code,String nameOfContinet);
 	void selectCountriesOfContinent(String code);
+	boolean isExist(String code);
 }
