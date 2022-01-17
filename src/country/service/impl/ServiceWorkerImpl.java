@@ -16,9 +16,12 @@ public class ServiceWorkerImpl implements IServiceWorker {
 	@Override
 	public void InsertCountry(Country country,String nameOfContinet) {
 		int rowsAffected=countryDAO.add(country,nameOfContinet);
-		if (rowsAffected > 0) {
+		if (rowsAffected > 0) 
     	    System.out.println("Inserted " + rowsAffected + " rows.");
-    	}
+		else if(rowsAffected==-1)
+			 System.err.println("there is no continent with this name");
+		else if(rowsAffected==-2)
+			 System.err.println("this code is already exists");
     	else
     		System.err.println("Insertion not successful");
    
@@ -52,21 +55,19 @@ public class ServiceWorkerImpl implements IServiceWorker {
 		int rowsAffected=countryDAO.updateByCode(country, code,nameOfContinet);
 		 if (rowsAffected > 0) 
 			    System.out.println("Updates " + rowsAffected + " rows.");
+		 else if(rowsAffected==-1)
+			 System.err.println("there is no continent with this name");
+		 else if(rowsAffected==-2)
+			 System.err.println("this code is already exists");
 			else
 				System.err.println("update not successful");
 		    	}
+
+	@Override
+	public boolean isExist(String code) {
+		return countryDAO.getByCode(code)==null?false:true;	
+	}
 	}
 	 
-	/*if(getByCode(country.getCode())==null)               
 	
-    else 
-    	System.err.println("this code already exists");
-    
-    
-    if(getByCode(country.getCode())==null)
-   
-    	 else 
-         	System.err.println("this code already exists");
-	
-*/
 

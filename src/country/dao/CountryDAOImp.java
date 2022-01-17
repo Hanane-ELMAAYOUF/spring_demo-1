@@ -22,10 +22,10 @@ public class CountryDAOImp implements CountryDAO{
 	@Override
 	public int add(Country country,String nameOfContinet) {
 		country.setContinent(getByName(nameOfContinet));
-        if(country.getContinent()==null) {
-        	System.err.println("there is no continent with this name");
-        return -1;
-        }
+        if(country.getContinent()==null) 
+             return -1;
+        else if(getByCode(country.getCode())!=null)
+        	return -2;
         else {
             Query query=getSession().createSQLQuery("INSERT INTO country(name, code, devise, greetings,continent_id) VALUES(:name, :code, :devise,:greeting,:continent);");
             query.setParameter("name",country.getName()).setParameter("code",country.getCode()).setParameter("devise",country.getDevise()).setParameter("greeting",country.getGreetings()).setParameter("continent",country.getContinent());
@@ -58,9 +58,11 @@ public int deleteByCode(String code) {
 public int updateByCode(Country country,String code,String nameOfContinet) {
 	country.setContinent(getByName(nameOfContinet));
     if(country.getContinent()==null) {
-    	System.err.println("there is no continent with this name");
+    	
     return -1;
     }
+    else if(getByCode(country.getCode())!=null)
+    	return -2;
     else {
 	Query query = getSession().createQuery("update Country c set c.name=:name,c.code=:code,c.devise=:devise,c.greetings=:greeting,c.continent=:continent where c.code=:codeToUpdate");
 	 query.setParameter("name",country.getName())

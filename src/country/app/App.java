@@ -54,7 +54,7 @@ public class App {
 		case "4": {
 			System.out.println("Enter Code of country: ");
 			String code=inputFromConsole.next();
-			serviceWorker.selectCountry(code);
+			if(serviceWorker.isExist(code)) {
 			System.out.println("Enter new information of the country like: code,name,device,greeting,nameofcontinent:");
 			String input=inputFromConsole.next();
 			String[] informationOfCountry=input.split(",");
@@ -64,7 +64,10 @@ public class App {
 			country.setDevise(informationOfCountry[2]);
 			country.setGreetings(informationOfCountry[3]);
 			serviceWorker.updateCountry(country,code,informationOfCountry[4]);
-		}
+			}
+			else
+				 System.err.println("no country with this code ");
+			}
 		break;
 		default:
 			System.err.println("Unexpected value: " + query);
