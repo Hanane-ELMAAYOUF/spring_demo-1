@@ -62,7 +62,7 @@ public class App {
 		case "4": {
 			System.out.println("Enter Code of country: ");
 			String code=inputFromConsole.next();
-			serviceWorker.selectCountry(code);
+			if(serviceWorker.isExist(code)) {
 			System.out.println("Enter new information of the country like: code,name,device,greeting,nameofcontinent:");
 			String input=inputFromConsole.next();
 			try {
@@ -73,6 +73,7 @@ public class App {
 			country.setDevise(informationOfCountry[2]);
 			country.setGreetings(informationOfCountry[3]);
 			serviceWorker.updateCountry(country,code,informationOfCountry[4]);
+<<<<<<< HEAD
 			}catch (ArrayIndexOutOfBoundsException e) {
 				System.err.println("Verify the form of your input");
 			}
@@ -83,6 +84,12 @@ public class App {
 			String input=inputFromConsole.next();
 			serviceWorker.selectCountriesOfContinent(input);
 		}
+=======
+			}
+			else
+				 System.err.println("no country with this code ");
+			}
+>>>>>>> aspect-fonctionnel-04
 		break;
 		default:
 			System.err.println("Unexpected value: " + query);

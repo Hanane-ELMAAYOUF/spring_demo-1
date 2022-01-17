@@ -1,27 +1,33 @@
 package country.service.impl;
 
+import country.dao.CountryDAO;
+import country.model.Country;
+import country.service.IServiceWorker;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-
-import country.dao.CountryDAO;
-import country.model.Country;
-import country.service.IServiceWorker;
 
 @Service
 public class ServiceWorkerImpl implements IServiceWorker {
 	@Autowired
 	@Qualifier("hibernate")
 	private CountryDAO countryDAO;
-	@Autowired
-	private ApplicationContext applicationContext;
 	
 	@Override
 	public void InsertCountry(Country country,String nameOfContinet) {
-		countryDAO.add(country,nameOfContinet);
+		int rowsAffected=countryDAO.add(country,nameOfContinet);
+		if (rowsAffected > 0) 
+    	    System.out.println("Inserted " + rowsAffected + " rows.");
+		else if(rowsAffected==-1)
+			 System.err.println("there is no continent with this name");
+		else if(rowsAffected==-2)
+			 System.err.println("this code is already exists");
+    	else
+    		System.err.println("Insertion not successful");
+   
 	}
 
 	@Override
@@ -40,15 +46,32 @@ public class ServiceWorkerImpl implements IServiceWorker {
 
 	@Override
 	public void deleteCountry(String code) {
-		countryDAO.deleteByCode(code);
-		
+		int rowsAffected=countryDAO.deleteByCode(code);
+		if (rowsAffected > 0) {
+		    System.out.println("Deleted " + rowsAffected + " rows.");
+		}
+		else
+			System.err.println("delete not successful");
 	}
 
 	@Override
 	public void updateCountry(Country country,String code,String nameOfContinet) {
-		countryDAO.updateByCode(country, code,nameOfContinet);
-		
+		int rowsAffected=countryDAO.updateByCode(country, code,nameOfContinet);
+		 if (rowsAffected > 0) 
+			    System.out.println("Updates " + rowsAffected + " rows.");
+		 else if(rowsAffected==-1)
+			 System.err.println("there is no continent with this name");
+		 else if(rowsAffected==-2)
+			 System.err.println("this code is already exists");
+			else
+				System.err.println("update not successful");
+		    	}
+
+	@Override
+	public boolean isExist(String code) {
+		return countryDAO.getByCode(code)==null?false:true;	
 	}
+	
 
 	@Override
 	public void selectCountriesOfContinent(String code) {
@@ -67,9 +90,6 @@ public class ServiceWorkerImpl implements IServiceWorker {
 		}
 		}	
 	}
-	 
-	                
-
+	} 
 	
 
-}
