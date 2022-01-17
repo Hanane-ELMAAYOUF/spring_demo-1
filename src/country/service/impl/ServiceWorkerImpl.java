@@ -76,7 +76,9 @@ public class ServiceWorkerImpl implements IServiceWorker {
 	@Override
 	public void selectCountriesOfContinent(String code) {
 		List<Country> countries=countryDAO.getCountrieByCode(code);
-		if(countries.size()==0) 
+		if(countries==null)
+			System.err.println("No continent with this code");
+		else if(countries.size()==0) 
 			System.err.println("No country in this continent");
 		else {
 		for(Country country:countries) {
