@@ -33,7 +33,8 @@ public class ServiceWorkerImpl implements IServiceWorker {
 	@Override
 	public void selectCountry(String code) {
 		Country country=countryDAO.getByCode(code);
-		if(country==null) System.err.println("no country with this code ");
+		if(country==null) 
+			System.err.println("no country with this code ");
 		else {
 	    System.out.println("Id :"+country.getId());
 		System.out.println("Name :"+country.getName());
@@ -47,7 +48,9 @@ public class ServiceWorkerImpl implements IServiceWorker {
 	@Override
 	public void deleteCountry(String code) {
 		int rowsAffected=countryDAO.deleteByCode(code);
-		if (rowsAffected > 0) {
+		if(rowsAffected==-2)
+			System.err.println("no country with this code ");
+		else if (rowsAffected > 0) {
 		    System.out.println("Deleted " + rowsAffected + " rows.");
 		}
 		else
