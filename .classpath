@@ -25,7 +25,7 @@
 	<classpathentry kind="lib" path="lib1/spring-jdbc-5.3.14.jar"/>
 	<classpathentry kind="lib" path="lib1/spring-orm-5.3.14 (1).jar"/>
 	<classpathentry kind="lib" path="lib1/spring-tx-5.3.14.jar"/>
-	<classpathentry kind="lib" path="lib1/h2-1.4.200.jar"/>
+	<classpathentry kind="lib" path="lib1/h2-2.0.204.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="module" value="true"/>
