@@ -37,7 +37,7 @@ public class CountryDAOImp implements CountryDAO{
 	}
 	@Override
 	public Continent getByName(String name) {
-		Query query=getSessionFactory().openSession().createQuery("from Continent C where C.name =:name");
+		Query query=getSession().createQuery("from Continent C where C.name =:name");
 		query.setParameter("name", name);
 		return (Continent) query.uniqueResult();
 	}
