@@ -1,30 +1,17 @@
 package country.dao;
 
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
-import javax.sql.DataSource;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import country.model.Continent;
 import country.model.Country;
 @Repository("hibernate")
 public class CountryDAOImp implements CountryDAO{
 	@Autowired
     SessionFactory  sessionFactory;
-	@Autowired
-	DataSource dataSource;
+
 	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -34,13 +21,17 @@ public class CountryDAOImp implements CountryDAO{
 	}
 	@Override
 
-	public void add(Country c,String nameOfContinet) {
-		c.setContinent(getByName(nameOfContinet));
-        if(c.getContinent()==null)
+	public int add(Country country,String nameOfContinet) {
+		country.setContinent(getByName(nameOfContinet));
+        if(country.getContinent()==null) {
         	System.err.println("there is no continent with this name");
+        return -1;
+        }
         else {
         
-       getSession().save(c);
+        	Query query=getSession().createSQLQuery("INSERT INTO country(name, code, devise, greetings,continent_id) VALUES(:name, :code, :devise,:greeting,:continent);");
+            query.setParameter("name",country.getName()).setParameter("code",country.getCode()).setParameter("devise",country.getDevise()).setParameter("greeting",country.getGreetings()).setParameter("continent",country.getContinent());
+           return query.executeUpdate();  	
 	}
 	}
 	@Override
