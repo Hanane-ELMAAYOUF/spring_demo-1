@@ -17,42 +17,39 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class Config {
 
-    @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("country" );
-        sessionFactory.setHibernateProperties(hibernateProperties());
+	@Bean
+	public LocalSessionFactoryBean sessionFactory() {
+		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+		sessionFactory.setDataSource(dataSource());
+		sessionFactory.setPackagesToScan("country");
+		sessionFactory.setHibernateProperties(hibernateProperties());
 
-        return sessionFactory;
-    }
+		return sessionFactory;
+	}
 
-    @Bean
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:mem:db");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("sa");
-        
-        return dataSource;
-    }
+	@Bean
+	public DataSource dataSource() {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName("org.h2.Driver");
+		dataSource.setUrl("jdbc:h2:mem:db");
+		dataSource.setUsername("sa");
+		dataSource.setPassword("sa");
 
-    @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
-        HibernateTransactionManager transactionManager
-          = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
-    }
+		return dataSource;
+	}
 
-    private final Properties hibernateProperties() {
-        Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty(
-          "hibernate.hbm2ddl.auto", "create-drop");
-        hibernateProperties.setProperty(
-          "hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+	@Bean
+	public PlatformTransactionManager hibernateTransactionManager() {
+		HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+		transactionManager.setSessionFactory(sessionFactory().getObject());
+		return transactionManager;
+	}
 
-        return hibernateProperties;
-    }
+	private final Properties hibernateProperties() {
+		Properties hibernateProperties = new Properties();
+		hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+
+		return hibernateProperties;
+	}
 }
