@@ -11,47 +11,16 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.CollectionId;
 
 import lombok.Data;
-
+@Data
 @Entity
 public class Continent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
 	private String name;
 	private String code;
 	@OneToMany
 	private List<Country> countries;
 
-	public List<Country> getCountries() {
-		return countries;
-	}
-
-	public void setCountries(List<Country> countries) {
-		this.countries = countries;
-	}
+	
 }
